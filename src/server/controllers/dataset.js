@@ -25,7 +25,7 @@ dataSetController.create = async (req, res, next) => {
 };
 
 dataSetController.update = async (req, res, next) => {
-  const { id } = req.params;
+  const { dataset: id } = req.params;
   const dataSetForm = filterProperties(req.body, [
     'name',
     'graphColor',
@@ -34,7 +34,7 @@ dataSetController.update = async (req, res, next) => {
   ]);
 
   try {
-    const updatedDataSet = await DataSet.findOneAndUpdate(id, dataSetForm, {
+    const updatedDataSet = await DataSet.findByIdAndUpdate(id, dataSetForm, {
       new: true,
       runValidators: true,
     }).exec();
@@ -60,7 +60,7 @@ dataSetController.getAll = async (req, res, next) => {
 };
 
 dataSetController.getOne = async (req, res, next) => {
-  const { id } = req.params;
+  const { dataset: id } = req.params;
 
   try {
     const dataSet = await DataSet.findById(id).exec();
@@ -74,7 +74,7 @@ dataSetController.getOne = async (req, res, next) => {
 };
 
 dataSetController.delete = async (req, res, next) => {
-  const { id } = req.params;
+  const { dataset: id } = req.params;
 
   try {
     await DataSet.deleteOne({ _id: id }).orFail(ErrorDataSetNotFound);

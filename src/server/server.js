@@ -15,16 +15,11 @@ mongoose.connection.once('open', () => {
 
 const app = express();
 
-// require routers
-const dataSetRouter = require('./routes/dataset');
-
 // middleware for json body parsing
 app.use('/api', express.json());
 
 // routes for api
-app.use('/api/dataset', dataSetRouter);
-// routes for data sets
-// routes for points
+app.use('/api', require('./routes/api'));
 
 app.use((err, req, res, next) => {
   next; // unused
