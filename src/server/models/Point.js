@@ -4,7 +4,7 @@ const { Schema, ObjectId } = mongoose;
 
 const pointSchema = new Schema({
   Point: {
-    owner: { type: ObjectId, required: true },
+    owner: { type: ObjectId /* required: true */ },
     dataset: { type: ObjectId, required: true },
     timestamp: {
       type: Date,
@@ -14,7 +14,7 @@ const pointSchema = new Schema({
   },
 });
 
-/* 
+/*
   Create an index on the Point schema to aid performance when retrieving the points for a data set.
   We create a compound index first on the `dataset` ObjectId, then for the timestamps in descending order.
   This helps MongoDB know that Points will likely be accessed in such a way that groups the points by their data set.
