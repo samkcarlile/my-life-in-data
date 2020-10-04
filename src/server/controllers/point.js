@@ -79,8 +79,8 @@ pointController.deleteOne = async (req, res, next) => {
   const { point: id } = req.params;
 
   try {
-    const deletePoint = await Point.delete(id).orFail('nothing to delete');
-    res.status(200).json(deletePoint);
+    await Point.deleteOne({ _id: id }).orFail('nothing to delete');
+    res.sendStatus(200);
   } catch (err) {
     next({
       log: `⚠️ [ERROR] pointController.delete - ${err}`,
@@ -93,10 +93,8 @@ pointController.deleteAll = async (req, res, next) => {
   const { dataset } = req.params;
 
   try {
-    const deletedPoints = await Point.deleteMany({ dataset }).orFail(
-      'nothing to delete'
-    );
-    res.status(200).json(deletedPoints);
+    await Point.deleteMany({ dataset }).orFail('nothing to delete');
+    res.sendStatus(200);
   } catch (err) {
     next({
       log: `⚠️ [ERROR] pointController.delete - ${err}`,

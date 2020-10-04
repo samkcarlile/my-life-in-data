@@ -77,13 +77,13 @@ dataSetController.delete = async (req, res, next) => {
   const { dataset: id } = req.params;
 
   try {
-    await DataSet.deleteOne({ _id: id }).orFail(ErrorDataSetNotFound);
+    await DataSet.deleteOne({ _id: id }).orFail(new ErrorDataSetNotFound());
     res.sendStatus(200);
   } catch (err) {
     next({
       log: `⚠️ [ERROR] dataSetController.delete - ${err}`,
       // https://stackoverflow.com/questions/4088350/is-rest-delete-really-idempotent
-      status: err.message === ErrorDataSetNotFound.message ? 404 : 500,
+      status: err.status || 500,
       message: { error: 'error deleting dataset' },
     });
   }

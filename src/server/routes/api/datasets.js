@@ -6,6 +6,7 @@ const pointController = require('../../controllers/point');
 /* /api/datasets */
 router.post('', dataSetController.create);
 router.get('', dataSetController.getAll);
+
 router
   .route('/:dataset$')
   .put(dataSetController.update)

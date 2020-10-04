@@ -27,11 +27,3 @@ pointSchema.index({ dataset: 1, timestamp: -1 });
 const Point = mongoose.model('Point', pointSchema);
 
 module.exports = Point;
-
-/*
-Point {
-  datasetID: <ObjectID>
-  timestamp: <Date>
-  value: <number>
-}
-*/
