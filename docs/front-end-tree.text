@@ -3,6 +3,7 @@ Tasks:
   build out homepage component
     set tile components
     add point modal component
+    some kind of nav 
   build out set editor component
     display of sets (list maybe) can delete the sets
     add set form modal

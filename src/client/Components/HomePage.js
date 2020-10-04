@@ -1,64 +1,138 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Modal, Button, Icon, Card } from 'semantic-ui-react';
+import { Input, Modal, Button, Icon, Card } from 'semantic-ui-react';
 
 // Dummy data; setList will be in our State
+
 const dummySetList = [
   {
-    header: 'Water Intake',
-    // description:
-    //   'Leverage agile frameworks to provide a robust synopsis for high level overviews.',
-    meta: '30 points recorded',
+    _id: 1, // data set id
+    owner: 1, // user id
+    name: 'Water Intake',
+    type: 'number',
+    graphColor: 'blue',
+    aggregateFunc: 'sum',
+    createdAt: new Date(),
   },
   {
-    header: 'Mood',
-    // description:
-    //   'Bring to the table win-win survival strategies to ensure proactive domination.',
-    meta: '20 points recorded',
+    _id: 2, // data set id
+    owner: 1, // user id
+    name: 'Mood',
+    type: 'number',
+    graphColor: 'purple',
+    aggregateFunc: 'average',
+    createdAt: new Date(),
   },
   {
-    header: 'Miles ran',
-    // description:
-    //   'Capitalise on low hanging fruit to identify a ballpark value added activity to beta test.',
-    meta: '40 points recorded',
+    _id: 3, // data set id
+    owner: 1, // user id
+    name: 'Miles ran',
+    type: 'number',
+    graphColor: 'green',
+    aggregateFunc: 'sum',
+    createdAt: new Date(),
   },
 ];
 
+const dummyPoint = [
+  {
+    timestamp: new Date(),
+    value: 9,
+    dataset: 928374928347, // data set id
+    owner: 88239487234, // user id
+  }
+];
 
-const formatCard = (list) => {
-  const formattedList = list.slice();
-  return formattedList.map((set) => (
-    <Card
-      header={set.header}
-      meta={set.meta}
-      extra={
+
+const DataSetTile = ({ name, goToAddNewPoint, viewMetrics, id }) => (
+  <Card style={{margin: '20px'}}
+    header={name}
+    // meta={set.meta}
+    extra={
+      <div>
+        <div style={{display: 'flex', justifyContent: 'center', margin:'10px 30px 30px'}}>
+          <Button circular
+            color='green' 
+            icon='plus square' 
+            size='massive' 
+            onClick={() => goToAddNewPoint(name, id)}
+          ></Button>
+        </div>
         <div>
-          <div style={{display: 'flex', justifyContent: 'center', margin:'10px 30px 30px'}}>
-            <Button color='green' circular icon='plus square' size='massive'></Button>
-          </div>
-          <div>
-            <Button basic compact fluid icon color='purple' size='small' labelPosition='left'>
+          <Link to="/metrics">
+            <Button basic compact fluid icon 
+              color='purple' 
+              size='small' 
+              labelPosition='left' 
+              onClick={() => {
+                viewMetrics(id);
+              }}
+            >
               <Icon name='line graph' />
               View Metrics
             </Button>
-          </div>
+          </Link>
         </div>
-      }
-    />)
-  );
-}
+      </div>
+    }
+  />
+);
 
 
 const HomePage = () => {
-  const setList = formatCard(dummySetList);
+  const [modalIsOpen, setModalOpen] = useState(false);
+  const [modalName, setModalName] = useState();
+  const [modalDataSetId, setModalDataSetId] = useState();
+  const [modalInputValue, setModalInputValue] = useState();
+
+  const openModal = () => {
+    setModalInputValue('');
+    setModalOpen(true);
+  }
+  
+  const setList = dummySetList.map((set) => (
+    <DataSetTile
+      name={set.name}
+      goToAddNewPoint={(name, id) => {
+        setModalDataSetId(id);
+        setModalName(name);
+        openModal();
+      }}
+      // function here that should set the central store state variable 
+      // that tells render page which data set to visualize
+      viewMetrics={(setId)=>console.log(setId)}
+      id={set._id}
+    />)
+  );
+
   return (
       <div>
-        <h1>HOME PAGE</h1>
-        <Card.Group>
-          {setList}
-        </Card.Group>
-        {/* <Card.Group items={setList}/> */}
-        {/* <Modal></Modal> */}
+        <div style={{display: 'flex', justifyContent: 'center', marginTop: '50px'}}>
+          <Card.Group >
+            {setList}
+          </Card.Group>
+        </div>
+        <Modal
+          // centered={false}
+          closeIcon
+          size='mini'
+          onClose={() => setModalOpen(false)}
+          // onOpen={() => setModalOpen(true)}
+          open={modalIsOpen}
+          // trigger={<Button>Show Modal</Button>}
+        >
+          <Modal.Header>Create a new point in {modalName}</Modal.Header>
+          <Modal.Content style={{display: 'flex', justifyContent: 'space-between'}}>
+            <Input focus
+              value={modalInputValue} 
+              onChange={(e)=>setModalInputValue(e.target.value)}
+              type='number' 
+              placeholder='Input Num'>
+            </Input>
+            {/* function here that  */}
+            <Button onClick={() => setModalOpen(false)}>OK</Button>
+          </Modal.Content>
+        </Modal>
       </div>
    );
 };
