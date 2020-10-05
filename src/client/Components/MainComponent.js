@@ -1,42 +1,42 @@
-import React from 'react';
-import { 
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 
-// import PrivateRoute from 'PrivateRoute';
+import PrivateRoute from './PrivateRoute';
 import NavBar from './NavBar';
 import Login from './Login';
-import HomePage from './HomePage'
+import HomePage from './home/HomePage';
 import SetEditor from './SetEditor';
-import Metrics from './Metrics'
+import Metrics from './Metrics';
 
 const MainComponent = () => {
+  const isLoggedIn = useStoreState((state) => state.user.isLoggedIn);
+  const initialize = useStoreActions((actions) => actions.initialize);
+  // const login = useStoreActions(actions => actions.user.authenticate);
+
+  useEffect(() => {
+    console.log('ran useEffect...');
+    initialize();
+  }, []);
+
+  if (!isLoggedIn) return <Login />;
 
   return (
     <Router>
-      {/* {authenticated && <NavBar /> } */}
       <NavBar />
       <Switch>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/sets">
+        <Router path="/sets">
           <SetEditor />
-        </Route>
-        <Route path="/metrics">
+        </Router>
+        <Router path="/metrics/:datasetID?">
           <Metrics />
-        </Route>
-        <Route path="/">
+        </Router>
+        <Router path="/">
           <HomePage />
-        </Route>
+        </Router>
       </Switch>
     </Router>
+  );
+};
 
-  )
-
-}
-    
 export default MainComponent;

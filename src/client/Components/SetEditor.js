@@ -1,38 +1,10 @@
 import React, { useState } from 'react';
+import { useStoreState } from 'easy-peasy';
 import { List, Input, Dropdown, Modal, Button } from 'semantic-ui-react';
 
-const dummySetList = [
-  {
-    _id: 1, // data set id
-    owner: 1, // user id
-    name: 'Water Intake',
-    type: 'number',
-    graphColor: 'blue',
-    aggregateFunc: 'sum',
-    createdAt: new Date(),
-  },
-  {
-    _id: 2, // data set id
-    owner: 1, // user id
-    name: 'Mood',
-    type: 'number',
-    graphColor: 'purple',
-    aggregateFunc: 'average',
-    createdAt: new Date(),
-  },
-  {
-    _id: 3, // data set id
-    owner: 1, // user id
-    name: 'Miles ran',
-    type: 'number',
-    graphColor: 'green',
-    aggregateFunc: 'sum',
-    createdAt: new Date(),
-  },
-];
-
-
 const SetEditor = () => {
+  const setList = useStoreState((state) => state.datasets.items);
+
   const [modalIsOpen, setModalOpen] = useState(false);
   const [modalInputValue, setModalInputValue] = useState('');
   const [modalDropdownValue, setModalDropdownValue] = useState();
@@ -41,42 +13,42 @@ const SetEditor = () => {
     { key: 1, text: 'Sum', value: 'Sum' },
     { key: 2, text: 'Count', value: 'Count' },
     { key: 3, text: 'Average', value: 'Average' },
-  ]
+  ];
 
-  const dataSets = dummySetList.map((set) => {
+  const dataSets = setList.map((set) => {
     return (
-      <List.Item>
-        <List.Content floated='right'>
-          <Button size='mini' basic color='red'>Delete</Button>
+      <List.Item key={set._id}>
+        <List.Content floated="right">
+          <Button size="mini" basic color="red">
+            Delete
+          </Button>
         </List.Content>
-        <List.Content>
-          {set.name}
-        </List.Content>
-     </List.Item>
+        <List.Content>{set.name}</List.Content>
+      </List.Item>
     );
-  })
+  });
 
   return (
-    <div style={{margin: '45px', display: 'flex', justifyContent: 'center'}}>
-      <List divided
-        style={{width: "60vw"}} 
-        verticalAlign='bottom'
-      >
+    <div style={{ margin: '45px', display: 'flex', justifyContent: 'center' }}>
+      <List divided style={{ width: '60vw' }} verticalAlign="bottom">
         {dataSets}
         <List.Item>
-        <List.Content>
-          <Button 
-            size='mini' 
-            basic color='green'
-            onClick={() => setModalOpen(true)}
-          >Add New Set</Button>
-        </List.Content>
+          <List.Content>
+            <Button
+              size="mini"
+              basic
+              color="green"
+              onClick={() => setModalOpen(true)}
+            >
+              Add New Set
+            </Button>
+          </List.Content>
         </List.Item>
       </List>
       <Modal
         // centered={false}
         closeIcon
-        size='mini'
+        size="mini"
         onClose={() => setModalOpen(false)}
         // onOpen={() => setModalOpen(true)}
         open={modalIsOpen}
@@ -84,14 +56,17 @@ const SetEditor = () => {
       >
         <Modal.Header>Create a New Set</Modal.Header>
         <Modal.Content>
-          <Input focus
-            value={modalInputValue} 
-            onChange={(e)=>setModalInputValue(e.target.value)}
-            placeholder='Set Name'>
-          </Input>
+          <Input
+            focus
+            value={modalInputValue}
+            onChange={(e) => setModalInputValue(e.target.value)}
+            placeholder="Set Name"
+          ></Input>
         </Modal.Content>
         <Modal.Content>
-          <Dropdown clearable selection
+          <Dropdown
+            clearable
+            selection
             options={aggregateFuncOptions}
             value={modalDropdownValue}
             onChange={(e, { value }) => setModalDropdownValue(value)}
@@ -103,7 +78,7 @@ const SetEditor = () => {
         </Modal.Actions>
       </Modal>
     </div>
-   );
+  );
 };
 
 export default SetEditor;
