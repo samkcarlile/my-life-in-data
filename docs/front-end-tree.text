@@ -1,0 +1,63 @@
+Tasks: 
+  figure out router arrangement and nesting w/ auth
+  build out homepage component
+    set tile components
+    add point modal component
+    some kind of nav 
+  build out set editor component
+    display of sets (list maybe) can delete the sets
+    add set form modal
+  build out metrics component
+    graph
+    list of different sets to switch visualization
+      sidebar or dropdown
+
+
+
+index.js
+|
+APP = (wrapper router, easy-peasy, react-query)
+|
+main component 
+  Home Page (auth layer) ('/')
+    (tiles to add points to a set)
+      button on tile to take you to metrics
+    (click on tiles, opens modal to add point)
+
+
+  Login (/login)      
+    (sign-up modal)
+  
+  set editor (auth layer)(/sets)
+    (stretch) tiles for each set
+    button to add a set
+      open modal form to define new set
+
+  metrics (auth layer) (/metrics)
+    graph displaying a single set
+      defaults to past week (stretch feat. to display different time scales)
+    some kind of navigation (tiles, list, etc)
+      changes which set the graph renders
+
+
+
+
+
+
+// React auth
+<Router>
+  <Switch>
+    <Route path="/login">
+      <LoginPage />
+    </Route>
+    <PrivateRoute path="/">
+      <HomePage />
+    </PrivateRoute>
+    <PrivateRoute path="/sets">
+      <Sets />
+    </PrivateRoute>
+      <PrivateRoute path="/metrics">
+      <Metrics />
+    </PrivateRoute>
+  </Switch>
+</Router>

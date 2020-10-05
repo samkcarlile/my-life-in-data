@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=production nodemon server/server.js",
-    "dev": "NODE_ENV=development webpack-dev-server --open & nodemon server/server.js",
+    "dev": "NODE_ENV=development webpack-dev-server --open",
     "build": "NODE_ENV=production webpack"
   },
   "repository": {
@@ -28,6 +28,7 @@
     "eslint": "^7.10.0",
     "eslint-config-prettier": "^6.12.0",
     "eslint-config-problems": "^5.0.0",
+    "file-loader": "^6.1.0",
     "html-webpack-plugin": "^4.5.0",
     "nodemon": "^2.0.4",
     "prettier": "^2.1.2",
@@ -39,10 +40,13 @@
   "dependencies": {
     "express": "^4.17.1",
     "mongoose": "^5.10.7",
+    "ms": "^2.1.2",
     "plotly.js": "^1.56.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-plotly.js": "^2.5.0",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^2.0.0"
   }
 }
