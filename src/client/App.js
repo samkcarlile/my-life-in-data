@@ -1,5 +1,5 @@
 import React from 'react';
-import MainComponent from './Components/MainComponent';
+import MainComponent from './components/MainComponent';
 
 const App = () => (
   // easy peasy wrapper

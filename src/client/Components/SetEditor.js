@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { List, Button } from 'semantic-ui-react';
+import { List, Input, Dropdown, Modal, Button } from 'semantic-ui-react';
 
 const dummySetList = [
   {
@@ -33,6 +33,15 @@ const dummySetList = [
 
 
 const SetEditor = () => {
+  const [modalIsOpen, setModalOpen] = useState(false);
+  const [modalInputValue, setModalInputValue] = useState('');
+  const [modalDropdownValue, setModalDropdownValue] = useState();
+
+  const aggregateFuncOptions = [
+    { key: 1, text: 'Sum', value: 'Sum' },
+    { key: 2, text: 'Count', value: 'Count' },
+    { key: 3, text: 'Average', value: 'Average' },
+  ]
 
   const dataSets = dummySetList.map((set) => {
     return (
@@ -54,7 +63,45 @@ const SetEditor = () => {
         verticalAlign='bottom'
       >
         {dataSets}
+        <List.Item>
+        <List.Content>
+          <Button 
+            size='mini' 
+            basic color='green'
+            onClick={() => setModalOpen(true)}
+          >Add New Set</Button>
+        </List.Content>
+        </List.Item>
       </List>
+      <Modal
+        // centered={false}
+        closeIcon
+        size='mini'
+        onClose={() => setModalOpen(false)}
+        // onOpen={() => setModalOpen(true)}
+        open={modalIsOpen}
+        // trigger={<Button>Show Modal</Button>}
+      >
+        <Modal.Header>Create a New Set</Modal.Header>
+        <Modal.Content>
+          <Input focus
+            value={modalInputValue} 
+            onChange={(e)=>setModalInputValue(e.target.value)}
+            placeholder='Set Name'>
+          </Input>
+        </Modal.Content>
+        <Modal.Content>
+          <Dropdown clearable selection
+            options={aggregateFuncOptions}
+            value={modalDropdownValue}
+            onChange={(e, { value }) => setModalDropdownValue(value)}
+          />
+        </Modal.Content>
+        <Modal.Actions>
+          {/* function here that submit the contents of the modal to Db */}
+          <Button onClick={() => setModalOpen(false)}>OK</Button>
+        </Modal.Actions>
+      </Modal>
     </div>
    );
 };

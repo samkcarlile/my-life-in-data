@@ -38,6 +38,15 @@ function NavBar() {
         >
           Metrics
         </Menu.Item>
+        </Link>
+        <Link to='/login'>
+        <Menu.Item
+          name='login'
+          active={activeItem === 'login'}
+          onClick={()=>setActiveItem('login')}
+        >
+          Login
+        </Menu.Item>
       </Link>
       <Menu.Menu position='right'>
         <Dropdown item text={'user'} simple>

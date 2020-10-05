@@ -34,15 +34,6 @@ const dummySetList = [
   },
 ];
 
-const dummyPoint = [
-  {
-    timestamp: new Date(),
-    value: 9,
-    dataset: 928374928347, // data set id
-    owner: 88239487234, // user id
-  }
-];
-
 
 const DataSetTile = ({ name, goToAddNewPoint, viewMetrics, id }) => (
   <Card style={{margin: '20px'}}
@@ -84,6 +75,10 @@ const HomePage = () => {
   const [modalName, setModalName] = useState();
   const [modalDataSetId, setModalDataSetId] = useState();
   const [modalInputValue, setModalInputValue] = useState();
+
+  React.useEffect(() => {
+    console.log("EFFECT");
+  }, []);
 
   const openModal = () => {
     setModalInputValue('');

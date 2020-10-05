@@ -35,13 +35,19 @@ const dummySetList = [
 const mpd = 8.64e+7;
 const dummyPointList = [
   {
-    timestamp: new Date(Date.now() - (7 * mpd)),
+    timestamp: new Date(Date.now() - (6 * mpd)),
     value: 9,
     dataset: 1, // data set id
     owner: 3, // user id
   },
   {
     timestamp: new Date(Date.now() - (3 * mpd)),
+    value: 3,
+    dataset: 1, // data set id
+    owner: 3, // user id
+  },
+  {
+    timestamp: new Date(Date.now() - (2.8 * mpd)),
     value: 3,
     dataset: 1, // data set id
     owner: 3, // user id

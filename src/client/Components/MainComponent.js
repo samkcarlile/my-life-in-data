@@ -17,18 +17,7 @@ const MainComponent = () => {
 
   return (
     <Router>
-      {/* <ul>
-        <h1>HELLO</h1>
-        <li>
-          <Link to="/"><button>Home</button></Link>
-        </li>
-        <li>
-          <Link to="/setEditor"><button>Set Editor</button></Link>
-        </li>
-        <li>
-          <Link to="/metrics"><button>Metrics</button></Link>
-        </li>
-      </ul>  */}
+      {/* {authenticated && <NavBar /> } */}
       <NavBar />
       <Switch>
         <Route path="/login">
