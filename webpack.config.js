@@ -30,8 +30,13 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        exclude: /node_modules/,
         use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf|png|jpe?g|gif|svg)$/,
+        use: [
+          'file-loader',
+        ],
       },
     ],
   },
