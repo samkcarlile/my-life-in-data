@@ -20,7 +20,7 @@ authController.signUp = async (req, res, next) => {
   ]);
 
   try {
-    const newUser = await User.create(newUserForm);
+    const newUser = await User.create(newUserForm).lean();
     res.locals.user = newUser;
     next();
   } catch (err) {
@@ -38,7 +38,8 @@ authController.login = async (req, res, next) => {
   ]);
 
   try {
-    const user = User.findOne({ username })
+    const user = await User.findOne({ username })
+      .lean()
       .orFail(new ErrorUserNotFound())
       .exec();
 
@@ -64,7 +65,7 @@ authController.issueToken = async (req, res, next) => {
       message: { error: 'Something went wrong.' },
     });
 
-  const userPayload = removeProperties(res.locals.user, ['password', '_id']);
+  const userPayload = removeProperties(res.locals.user, ['password']);
 
   // generate the token
   const token = jwt.sign({ user: userPayload }, 'secret', {
@@ -77,11 +78,10 @@ authController.issueToken = async (req, res, next) => {
 
 /** Checks if the jwt is on the header and it is valid */
 authController.authenticate = async (req, res, next) => {
-  const authHeader = req.get('Authorization');
-
-  const token = authHeader.split(' ')[1]; // it looks like this: 'Bearer: <tokenWillBeHere>'
-
   try {
+    const authHeader = req.get('Authorization');
+    const token = authHeader.split(' ')[1]; // it looks like this: 'Bearer: <tokenWillBeHere>'
+
     const payload = jwt.verify(token, 'secret');
     req.user = payload.user;
     next();
@@ -98,8 +98,3 @@ authController.authenticate = async (req, res, next) => {
 };
 
 module.exports = authController;
-
-// 1. User logs in with a username:password pair
-// 2. Server responds with json web token
-// 3. Client saves that token in either cookies or localStorage or somewhere
-// 4. On every subsequent request to the server, the client sends the saved token as a header

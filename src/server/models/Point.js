@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { Schema, ObjectId } = mongoose;
 
 const pointSchema = new Schema({
-  owner: { type: ObjectId /* required: true */ },
+  owner: { type: ObjectId, required: true },
   dataset: { type: ObjectId, required: true },
   timestamp: {
     type: Date,

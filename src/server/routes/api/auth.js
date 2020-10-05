@@ -13,3 +13,5 @@ router.post('/login', login, issueToken);
 router.post('/validateToken', authenticate, (req, res) =>
   res.status(200).json({ ok: true })
 );
+
+module.exports = router;

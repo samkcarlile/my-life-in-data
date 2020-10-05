@@ -1,25 +1,16 @@
 const Point = require('../models/Point.js');
 
-const { filterProperties } = require('../utils');
-
 const pointController = {};
 
 pointController.create = async (req, res, next) => {
-  const { dataset } = req.params;
-  const point = filterProperties(req.body, ['value']);
-
-  console.log(
-    JSON.stringify({
-      dataset,
-      ...point,
-    })
-  );
+  const newPointForm = {
+    dataset: req.params.dataset,
+    owner: req.user._id,
+    value: req.body.value,
+  };
 
   try {
-    const newPoint = await Point.create({
-      dataset,
-      ...point,
-    });
+    const newPoint = await Point.create(newPointForm);
     res.status(200).json(newPoint);
   } catch (err) {
     next({
@@ -30,10 +21,13 @@ pointController.create = async (req, res, next) => {
 };
 
 pointController.getAll = async (req, res, next) => {
-  const { dataset } = req.params;
+  const query = {
+    dataset: req.params.dataset,
+    owner: req.user._id,
+  };
 
   try {
-    const allPoints = await Point.find({ dataset }).exec();
+    const allPoints = await Point.find(query).exec();
     res.status(200).json(allPoints);
   } catch (err) {
     next({
@@ -44,10 +38,13 @@ pointController.getAll = async (req, res, next) => {
 };
 
 pointController.getOne = async (req, res, next) => {
-  const { point: id } = req.params;
+  const query = {
+    _id: req.params.point,
+    owner: req.user._id,
+  };
 
   try {
-    const onePoint = await Point.findById(id).exec();
+    const onePoint = await Point.findOne(query).lean().exec();
     res.status(200).json(onePoint);
   } catch (err) {
     next({
@@ -58,14 +55,16 @@ pointController.getOne = async (req, res, next) => {
 };
 
 pointController.update = async (req, res, next) => {
-  const { point: id } = req.params;
-  const pointUpdateForm = filterProperties(req.body, ['value']);
+  const query = { _id: req.params.point, owner: req.user._id };
+  const pointUpdateForm = { value: req.body.value };
+  const options = { new: true, runValidators: true };
 
   try {
-    const updatedPoint = await Point.findByIdAndUpdate(id, pointUpdateForm, {
-      new: true,
-      runValidators: true,
-    }).exec();
+    const updatedPoint = await Point.findOneAndUpdate(
+      query,
+      pointUpdateForm,
+      options
+    ).exec();
     res.status(200).json(updatedPoint);
   } catch (err) {
     next({
@@ -76,10 +75,10 @@ pointController.update = async (req, res, next) => {
 };
 
 pointController.deleteOne = async (req, res, next) => {
-  const { point: id } = req.params;
+  const query = { _id: req.params.point, owner: req.user._id };
 
   try {
-    await Point.deleteOne({ _id: id }).orFail('nothing to delete');
+    await Point.deleteOne(query).orFail('nothing to delete');
     res.sendStatus(200);
   } catch (err) {
     next({
@@ -90,10 +89,10 @@ pointController.deleteOne = async (req, res, next) => {
 };
 
 pointController.deleteAll = async (req, res, next) => {
-  const { dataset } = req.params;
+  const query = { dataset: req.params.dataset, owner: req.user._id };
 
   try {
-    await Point.deleteMany({ dataset }).orFail('nothing to delete');
+    await Point.deleteMany(query).orFail('nothing to delete');
     res.sendStatus(200);
   } catch (err) {
     next({

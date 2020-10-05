@@ -5,7 +5,7 @@ const { Schema, ObjectId } = mongoose;
 const RequiredString = { type: String, required: true };
 
 const dataSetSchema = new Schema({
-  owner: { type: ObjectId /* required: true */ },
+  owner: { type: ObjectId, required: true },
   name: RequiredString,
   graphColor: {
     ...RequiredString,

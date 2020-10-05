@@ -13,6 +13,8 @@ dataSetController.create = async (req, res, next) => {
     'aggregateFunc',
   ]);
 
+  dataSetForm.owner = req.user._id;
+
   try {
     const dataset = await DataSet.create(dataSetForm);
     res.status(200).json(dataset);
@@ -25,19 +27,22 @@ dataSetController.create = async (req, res, next) => {
 };
 
 dataSetController.update = async (req, res, next) => {
-  const { dataset: id } = req.params;
+  const query = { _id: req.params.dataset, owner: req.user._id };
   const dataSetForm = filterProperties(req.body, [
     'name',
     'graphColor',
     'type',
     'aggregateFunc',
   ]);
+  const options = { new: true, runValidators: true };
 
   try {
-    const updatedDataSet = await DataSet.findByIdAndUpdate(id, dataSetForm, {
-      new: true,
-      runValidators: true,
-    }).exec();
+    const updatedDataSet = await DataSet.findOneAndUpdate(
+      query,
+      dataSetForm,
+      options
+    ).exec();
+
     res.status(200).json(updatedDataSet);
   } catch (err) {
     next({
@@ -49,7 +54,7 @@ dataSetController.update = async (req, res, next) => {
 
 dataSetController.getAll = async (req, res, next) => {
   try {
-    const dataSets = await DataSet.find({}).exec();
+    const dataSets = await DataSet.find({ owner: req.user._id }).exec();
     res.status(200).json(dataSets);
   } catch (err) {
     next({
@@ -63,7 +68,10 @@ dataSetController.getOne = async (req, res, next) => {
   const { dataset: id } = req.params;
 
   try {
-    const dataSet = await DataSet.findById(id).exec();
+    const dataSet = await DataSet.findById({
+      _id: id,
+      owner: req.user._id,
+    }).exec();
     res.status(200).json(dataSet);
   } catch (err) {
     next({
@@ -77,7 +85,9 @@ dataSetController.delete = async (req, res, next) => {
   const { dataset: id } = req.params;
 
   try {
-    await DataSet.deleteOne({ _id: id }).orFail(new ErrorDataSetNotFound());
+    await DataSet.deleteOne({ _id: id, owner: req.user._id }).orFail(
+      new ErrorDataSetNotFound()
+    );
     res.sendStatus(200);
   } catch (err) {
     next({
