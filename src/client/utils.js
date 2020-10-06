@@ -31,6 +31,9 @@ export async function fetchJSON(url, { method, body }, options) {
   return response.json();
 }
 
+/**
+ * This needs to be refactored, was written really quickly, sawwy ¯\_(ツ)_/¯
+ */
 export const mapListToGraphData = (pointList, aggFunc) => {
   const NOW = new Date();
 
