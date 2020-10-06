@@ -1,5 +1,5 @@
 const path = require('path');
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
@@ -46,9 +46,9 @@ module.exports = {
     ],
   },
   plugins: [
-    // new HtmlWebpackPlugin({
-    //   title: 'My Life In Data',
-    //   template: './src/template.html',
-    // }),
+    new HtmlWebpackPlugin({
+      title: 'My Life In Data',
+      template: './src/template.html',
+    }),
   ],
 };
