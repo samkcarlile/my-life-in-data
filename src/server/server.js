@@ -2,10 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 
-require('dotenv').config();
-
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URL, {
+mongoose.connect('mongodb+srv://badboi.isk8a.azure.mongodb.net/mylifeindata', {
   auth: {
     user: 'fire',
     password: 'fYzgID9ajNNj3K3j',
