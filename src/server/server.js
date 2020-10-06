@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const path = require('path');
 
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://badboi.isk8a.azure.mongodb.net/mylifeindata', {
@@ -20,6 +21,11 @@ app.use('/api', express.json());
 
 // routes for api
 app.use('/api', require('./routes/api'));
+
+// serve the index.html statically
+app.get('/', (req, res) =>
+  res.sendFile(path.join(__dirname, '../template.html'))
+);
 
 app.use((err, req, res, next) => {
   next; // unused

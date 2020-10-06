@@ -1,59 +1,31 @@
-import React, { useState } from 'react';
-import { 
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
-import { Menu, Dropdown } from 'semantic-ui-react';
+import React from 'react';
+import { Grid, Menu, Dropdown } from 'semantic-ui-react';
+import Graph from './Graph';
+import { useStoreState } from 'easy-peasy';
+import { useLocation, Link } from 'react-router-dom';
 
 function NavBar() {
-  const [activeItem, setActiveItem] = useState('points');
+  const { pathname } = useLocation();
+
+  const username = useStoreState((state) => state.user.username);
 
   return (
     <Menu>
-      <Link to='/'>
-        <Menu.Item
-          name='points'
-          active={activeItem === 'points'}
-          onClick={()=>setActiveItem('points')}
-        >
-          Points
-        </Menu.Item>
+      <Link to="/">
+        <Menu.Item active={pathname === '/'}>Points</Menu.Item>
       </Link>
-      <Link to='/sets'>
-        <Menu.Item
-          name='sets'
-          active={activeItem === 'sets'}
-          onClick={()=>setActiveItem('sets')}
-        >
-          Sets
-        </Menu.Item>
+      <Link to="/sets">
+        <Menu.Item active={pathname === '/sets'}>Sets</Menu.Item>
       </Link>
-      <Link to='/metrics'>
-        <Menu.Item
-          name='metrics'
-          active={activeItem === 'metrics'}
-          onClick={()=>setActiveItem('metrics')}
-        >
-          Metrics
-        </Menu.Item>
-        </Link>
-        <Link to='/login'>
-        <Menu.Item
-          name='login'
-          active={activeItem === 'login'}
-          onClick={()=>setActiveItem('login')}
-        >
-          Login
-        </Menu.Item>
+      <Link to="/metrics">
+        <Menu.Item active={pathname === '/metrics'}>Metrics</Menu.Item>
       </Link>
-      <Menu.Menu position='right'>
-        <Dropdown item text={'user'} simple>
+      <Menu.Menu position="right">
+        <Dropdown item text={username} simple>
           <Dropdown.Menu>
-            <Dropdown.Item
-              onClick={()=>console.log('Signing out!')}
-            >Sign Out</Dropdown.Item>
+            <Dropdown.Item onClick={() => console.log('Signing out!')}>
+              Sign Out
+            </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </Menu.Menu>

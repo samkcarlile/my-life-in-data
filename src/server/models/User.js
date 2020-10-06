@@ -14,7 +14,7 @@ const userSchema = new Schema({
   password: RequiredString,
   firstName: RequiredString,
   lastName: RequiredString,
-  age: { type: Number, required: true },
+  // age: { type: Number, required: true },
 });
 
 userSchema.pre('save', async function () {
