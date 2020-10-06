@@ -15,7 +15,7 @@ pointController.create = async (req, res, next) => {
   } catch (err) {
     next({
       log: `⚠️ [ERROR] pointController.create - ${err}`,
-      message: { error: "Some shit went down I'm sorry." },
+      message: { error: "Error: Internal server error." },
     });
   }
 };
@@ -32,7 +32,7 @@ pointController.getAll = async (req, res, next) => {
   } catch (err) {
     next({
       log: `⚠️ [ERROR] pointController.getAll - ${err}`,
-      message: { error: "Some shit went down I'm sorry." },
+      message: { error: "Error: Internal server error." },
     });
   }
 };
@@ -49,7 +49,7 @@ pointController.getOne = async (req, res, next) => {
   } catch (err) {
     next({
       log: `⚠️ [ERROR] pointController.getOne - ${err}`,
-      message: { error: "Some shit went down I'm sorry." },
+      message: { error: "Error: Internal server error." },
     });
   }
 };
@@ -69,7 +69,7 @@ pointController.update = async (req, res, next) => {
   } catch (err) {
     next({
       log: `⚠️ [ERROR] pointController.update - ${err}`,
-      message: { error: "Some shit went down I'm sorry." },
+      message: { error: "Error: Internal server error." },
     });
   }
 };
@@ -83,7 +83,7 @@ pointController.deleteOne = async (req, res, next) => {
   } catch (err) {
     next({
       log: `⚠️ [ERROR] pointController.delete - ${err}`,
-      message: { error: "Some shit went down I'm sorry." },
+      message: { error: "Error: Internal server error." },
     });
   }
 };
@@ -97,7 +97,7 @@ pointController.deleteAll = async (req, res, next) => {
   } catch (err) {
     next({
       log: `⚠️ [ERROR] pointController.delete - ${err}`,
-      message: { error: "Some shit went down I'm sorry." },
+      message: { error: "Error: Internal server error." },
     });
   }
 };

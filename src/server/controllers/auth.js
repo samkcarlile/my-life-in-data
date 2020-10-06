@@ -26,7 +26,7 @@ authController.signUp = async (req, res, next) => {
   } catch (err) {
     next({
       log: `⚠️ [ERROR] authController.signUp - ${err}`,
-      message: { error: "Some shit went down I'm sorry." },
+      message: { error: "Error: Internal server error." },
     });
   }
 };
