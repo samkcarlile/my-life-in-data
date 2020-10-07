@@ -1,18 +1,21 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  mode: process.env.NODE_ENV || 'development',
-  cache: true,
   entry: './src/client/index.js',
-  devtool: 'source-map',
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
   },
+  mode: process.env.NODE_ENV || 'development',
+  optimization: {
+    usedExports: true,
+  },
+  devtool: 'source-map',
   devServer: {
-    watchContentBase: true,
-    // publicPath: '/dist',
+    contentBase: path.join(__dirname, '/src/client'),
+    historyApiFallback: {
+      index: 'index.html',
+    },
     proxy: {
       '/api': 'http://localhost:3000',
     },
@@ -45,10 +48,7 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      title: 'My Life In Data',
-      template: './src/template.html',
-    }),
-  ],
+  resolve: {
+    extensions: ['.jsx', '.js'],
+  },
 };

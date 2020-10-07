@@ -1,5 +1,5 @@
 {
-  "extends": ["problems", "prettier"],
+  "extends": ["problems", "plugin:react/recommended", "prettier"],
   "env": {
     "browser": true,
     "node": true,
@@ -10,5 +10,9 @@
     "sourceType": "module",
     "ecmaFeatures": { "jsx": true }
   },
-  "rules": {}
+  "plugins": ["react-hooks"],
+  "rules": {
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
+  }
 }
