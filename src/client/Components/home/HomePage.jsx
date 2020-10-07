@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Component } from 'react';
 import { Link } from 'react-router-dom';
 import { useStoreState } from 'easy-peasy';
 import { Input, Modal, Button, Icon, Card } from 'semantic-ui-react';
