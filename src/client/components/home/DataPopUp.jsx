@@ -4,7 +4,7 @@ import { Modal } from 'semantic-ui-react';
 
 
 export default function DataPopUp({ isOpen, onClose }) {
-  console.log("DataPopUp is invoked!!!")
+
   return (
 
     <Modal
