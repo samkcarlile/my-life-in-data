@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "test": "jest",
     "start": "NODE_ENV=development nodemon ./src/server/server.js",
     "dev": "NODE_ENV=development webpack-dev-server --open & nodemon server/server.js",
     "build": "NODE_ENV=production webpack"
@@ -27,6 +28,8 @@
     "babel-loader": "^8.1.0",
     "concurrently": "^5.3.0",
     "css-loader": "^4.3.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.5",
     "eslint": "^7.10.0",
     "eslint-config-prettier": "^6.12.0",
     "eslint-config-problems": "^5.0.0",
@@ -42,10 +45,12 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
+    "babel-jest": "^26.5.2",
     "bcrypt": "^5.0.0",
     "dotenv": "^8.2.0",
     "easy-peasy": "^3.3.1",
     "express": "^4.17.1",
+    "jest": "^26.5.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.7",
     "ms": "^2.1.2",
@@ -54,6 +59,7 @@
     "react-dom": "^16.13.1",
     "react-plotly.js": "^2.5.0",
     "react-router-dom": "^5.2.0",
+    "react-test-renderer": "^16.13.1",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.0.0"
   }
