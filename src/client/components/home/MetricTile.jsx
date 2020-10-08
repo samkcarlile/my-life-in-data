@@ -1,5 +1,7 @@
 import React from 'react';
-import { Card, Button, Icon, Progress } from 'semantic-ui-react';
+import { Modal, Card, Button, Icon, Progress } from 'semantic-ui-react';
+
+import DataPopUp from './DataPopUp';
 
 // MetricTile takes in props --> { metric, onClick }
 export default function MetricTile({ metric, onClick }) {
@@ -20,6 +22,7 @@ export default function MetricTile({ metric, onClick }) {
             <Icon name="pencil alternate" />
             Record
           </Button>
+          <DataPopUp />
         </Card.Description>
       </Card.Content>
     </Card>
