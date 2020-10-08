@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Form, Button, Card, Icon } from 'semantic-ui-react';
 
 export default function Signup({ onSubmit }) {
-  const [firstname, setFirstname] = useState('');
-  const [lastname, setLastname] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -21,8 +21,8 @@ export default function Signup({ onSubmit }) {
               <input
                 placeholder="John"
                 type="text"
-                value={firstname}
-                onChange={(e) => setFirstname(e.target.value)}
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
               />
             </Form.Field>
             <Form.Field>
@@ -30,8 +30,8 @@ export default function Signup({ onSubmit }) {
               <input
                 placeholder="Doe"
                 type="text"
-                value={lastname}
-                onChange={(e) => setLastname(e.target.value)}
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
               />
             </Form.Field>
             <Form.Field>
@@ -52,7 +52,21 @@ export default function Signup({ onSubmit }) {
             </Form.Field>
             <div style={{ textAlign: 'center' }}>
               <Button.Group>
-                <Button type="submit" onClick={onSubmit}>
+                <Button
+                  type="submit"
+                  onClick={() =>
+                    username.length &&
+                    password.length &&
+                    firstName.length &&
+                    lastName.length &&
+                    onSubmit({
+                      username,
+                      password,
+                      firstName,
+                      lastName,
+                    })
+                  }
+                >
                   Sign Up
                 </Button>
               </Button.Group>

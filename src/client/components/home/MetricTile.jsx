@@ -9,7 +9,7 @@ export default function MetricTile({ metric, onClick }) {
 
   const pointsTodayString = `${pointsToday} point${
     pointsToday > 1 ? 's' : ''
-  } recorderd today.`;
+  } recorded today.`;
 
   return (
     <Card color={graphColor}>

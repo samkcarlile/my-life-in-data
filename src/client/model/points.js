@@ -2,19 +2,29 @@ import { action, thunk } from 'easy-peasy';
 import pointService from '../services/pointService';
 
 const pointsModel = {
-  items: {},
-  // Point Actions here
-  pointsLoaded: action((state, { dataset, allPoints }) => {
-    state.items[dataset._id].push(allPoints);
+  metricPoints: [],
+
+  getPoints: thunk(async (actions, { metric }) => {
+    const metricPoints = await pointService.getAll(metric);
+    actions.getPointsComplete(metricPoints);
   }),
 
-  /** Loads all points for a given dataset */
-  loadPoints: thunk(async (actions, { dataset }) => {
-    const allPoints = await pointService.getAll({ dataset });
-    actions.pointsLoaded({ dataset, allPoints });
+  getPointsComplete: action((state, metricPoints) => {
+    state.metricPoints = metricPoints;
   }),
 
-  deleteAllPoints: action((state, payload) => {}),
+  record: thunk(async (actions, { metric, value }) => {
+    try {
+      const newPoint = await pointService.record({ metric, value });
+      actions.recordPoint(newPoint);
+    } catch {
+      alert(`Couldn't record point.`);
+    }
+  }),
+
+  recordPoint: action((state, newPoint) => {
+    state.metricPoints.push(newPoint);
+  }),
 };
 
 export default pointsModel;

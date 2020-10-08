@@ -5,6 +5,7 @@ import { StoreProvider, createStore } from 'easy-peasy';
 
 import App from './App';
 import model from './model';
+import AuthProvider from './components/auth/AuthProvider';
 
 import 'semantic-ui-css/semantic.min.css';
 
@@ -13,7 +14,9 @@ const store = createStore(model);
 render(
   <BrowserRouter>
     <StoreProvider store={store}>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </StoreProvider>
   </BrowserRouter>,
   document.getElementById('app')

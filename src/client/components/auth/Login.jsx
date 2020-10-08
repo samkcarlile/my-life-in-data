@@ -59,7 +59,11 @@ export default function Login({ onSignUpClick, onSubmit }) {
                 <Button type="button" onClick={onSignUpClick}>
                   Sign up
                 </Button>
-                <Button primary type="submit" onClick={onSubmit}>
+                <Button
+                  primary
+                  type="submit"
+                  onClick={() => onSubmit({ username, password })}
+                >
                   Log In
                 </Button>
               </Button.Group>

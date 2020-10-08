@@ -20,8 +20,8 @@ authController.signUp = async (req, res, next) => {
   ]);
 
   try {
-    const newUser = await User.create(newUserForm).lean();
-    res.locals.user = newUser;
+    const newUser = await User.create(newUserForm);
+    res.locals.user = newUser.toObject();
     next();
   } catch (err) {
     next({
