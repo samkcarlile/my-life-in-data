@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import NavBar from './components/NavBar';
+import MetricsContainer from './components/metrics/MetricsContainer';
 import HomePage from './components/home/HomePage';
 
 const App = () => (
@@ -13,7 +14,7 @@ const App = () => (
       </Route>
 
       <Route path="/metrics">
-        <h1>metrics 📈</h1>
+        <MetricsContainer />
       </Route>
 
       <Route path="/">
