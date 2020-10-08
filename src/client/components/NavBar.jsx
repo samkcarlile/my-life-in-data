@@ -1,14 +1,25 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Menu, Dropdown } from 'semantic-ui-react';
 
 export default function NavBar() {
   return (
     <Menu>
-      <Menu.Item active={true}>Points</Menu.Item>
+      {/* Each of these Menu Items will redirect to a specific path. React Router will then
+      render the correct page using this path */}
 
-      <Menu.Item active={false}>Sets</Menu.Item>
+      <Link to="/">
+        <Menu.Item active={true}>Points</Menu.Item>
+      </Link>
 
-      <Menu.Item active={false}>Metrics</Menu.Item>
+      <Link to="/goals">
+        <Menu.Item active={false}>Goals</Menu.Item>
+      </Link>
+
+      <Link to="/metrics">
+        <Menu.Item active={false}>Metrics</Menu.Item>
+      </Link>
+
       <Menu.Menu position="right">
         <Dropdown item text="Jonathan" simple>
           <Dropdown.Menu>

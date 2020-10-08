@@ -4,6 +4,8 @@ import { Button, Modal, Card, Container, Grid } from 'semantic-ui-react';
 import MetricTile from './MetricTile';
 import DataPopUp from './DataPopUp';
 
+import { fetchMockMetrics } from '../../utils/mockData';
+
 export default function MetricList() {
   // set state
   // call the fetchMockMetrics function to get a list of metrics
@@ -36,28 +38,3 @@ export default function MetricList() {
     </>
   );
 }
-
-/** Returns a list of mock metric models (the same models you'd get from fetching the our backend) */
-const fetchMockMetrics = () => {
-  const metrics = [];
-  for (let i = 0; i < 5; i++) {
-    metrics.push({
-      _id: ~~(Math.random() * 10 ** 9),
-      name: [
-        'Water Intake',
-        'Miles Ran',
-        'Tacos Eaten',
-        'Hours Slept',
-        'Time In Car',
-      ][~~(Math.random() * 5)],
-      graphColor: ['blue', 'green', 'orange', 'purple', 'red'][
-        ~~(Math.random() * 5)
-      ],
-      type: 'number',
-      aggregateFunc: 'average',
-      pointsToday: ~~(Math.random() * 10),
-    });
-  }
-
-  return metrics;
-};
