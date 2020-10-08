@@ -6,7 +6,6 @@ import { Modal } from 'semantic-ui-react';
 export default function DataPopUp({ isOpen, onClose }) {
 
   return (
-
     <Modal
       closeOnDimmerClick={true}
       onClose={onClose}
@@ -15,6 +14,5 @@ export default function DataPopUp({ isOpen, onClose }) {
       content='Call Benjamin regarding the reports.'
       actions={['Snooze', { key: 'done', content: 'Done', positive: true }]}
     />
-
   );
 }

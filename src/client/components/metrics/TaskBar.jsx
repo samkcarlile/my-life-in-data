@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header, Icon, Image, Menu, Segment, Sidebar } from 'semantic-ui-react';
+import { Header, Icon, Image, Menu, Segment, Sidebar, Progress, Button } from 'semantic-ui-react';
 
 import { fetchMockPoints, fetchMockMetrics } from '../../utils/mockData';
 
@@ -18,7 +18,7 @@ export default function TaskBar() {
     <div className="ui segment" key={`dailyPointsData-${idx}`}>
       <div>
         {task}
-        {/* <Progress percent={this.state.percent} indicating /> */}
+        <Progress percent={99} indicating />
         <Button onClick={() => console.log('this button feels good')}>
           Increment
         </Button>
