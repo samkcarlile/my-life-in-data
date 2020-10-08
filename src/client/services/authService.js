@@ -1,31 +1,27 @@
-import { fetchJSON } from '../utils';
+import { fetchJSON, extractPayload } from '../utils';
 const LOGTAG = `⚠️ [authService] -`;
 
 export default {
-  /** Logs a user in using either a username/password to fetch a new JWT
-   *  or reuses a JWT in the localStorage.
-   *
-   * @throws an error indicating the log in was unsuccessful
-   * @returns {object} the logged in user
-   */
-  async login({ username, password }) {
-    // If there's a saved token, use that.
+  /** Checks for a saved token in localStorage, and returns parsed token payload (the user object) if there is one */
+  async authenticate() {
+    // if we have a saved token, we're already logged in
     const savedToken = await this.getSavedToken();
     if (savedToken) {
-      // TODO: send a fetch request to make sure the token is still valid
       return extractPayload(savedToken);
     }
+    return undefined;
+  },
 
-    // If there is no saved token, you must call `login` with a username and password
+  /** Logs a user in using either a username and password and stores the JWT in localStorage. */
+  async login({ username, password }) {
     if (!username || !password)
       throw new Error(
-        `${LOGTAG} - saved token not present in localStorage. must call login() with a username and password`
+        `${LOGTAG} - must call login() with a username and password`
       );
 
-    // If there's not a saved token, hit the /api/login endpoint to recieve one.
     try {
       const response = await fetchJSON(
-        'http://localhost:8080/api/login',
+        '/api/login',
         {
           method: 'POST',
           body: { username, password },
@@ -45,18 +41,14 @@ export default {
     localStorage.removeItem('jwt');
   },
 
-  /** Signs up a user and performs the same function as `authService.login()`
-   *
-   * @throws an error if the sign up or login process was unsuccessful
-   * @returns {object} the (newly signed-up) logged in user
-   */
+  /** Signs up a user, logs the user in, and store the JWT in localStorage */
   async signup({ username, password, firstName, lastName }) {
     const newUserForm = { username, password, firstName, lastName };
 
     // Send a request to sign the user up
     try {
       const response = await fetchJSON(
-        'http://localhost:8080/api/signup',
+        '/api/signup',
         {
           method: 'POST',
           body: newUserForm,
@@ -64,9 +56,7 @@ export default {
         { cache: 'no-cache' }
       );
       const { token } = response;
-      // Save the token to localStorage
       saveToken(token);
-      // Return the new user object (just like `authService.login()`)
       return extractPayload(token);
     } catch (err) {
       throw new Error(`${LOGTAG} - error signing up: ${err}`);
@@ -85,17 +75,4 @@ export default {
 async function saveToken(jwt) {
   // NOTE: no it doesn't need to be async, but it keeps the interfaces standard.
   localStorage.setItem('jwt', jwt);
-}
-
-/** Extracts a JSON payload from a JWT.
- * @param {string} jwt the encoded json web token
- * @returns {object} the json payload
- */
-function extractPayload(jwt) {
-  const [header, payload, signature] = jwt.split('.');
-  if (!header || !payload || !signature)
-    throw new Error(
-      `${LOGTAG} provided string is not a jwt. Expected 3 parts after splitting on '.'`
-    );
-  return JSON.parse(atob(payload));
 }

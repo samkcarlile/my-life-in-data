@@ -1,8 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, Dropdown } from 'semantic-ui-react';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 
 export default function NavBar() {
+  const user = useStoreState((state) => state.user);
+  const logout = useStoreActions((actions) => actions.user.logout);
+
   return (
     <Menu>
       {/* Each of these Menu Items will redirect to a specific path. React Router will then
@@ -21,11 +25,9 @@ export default function NavBar() {
       </Link>
 
       <Menu.Menu position="right">
-        <Dropdown item text="Jonathan" simple>
+        <Dropdown item text={user.firstName} simple>
           <Dropdown.Menu>
-            <Dropdown.Item onClick={() => console.log('Signing out!')}>
-              Sign Out
-            </Dropdown.Item>
+            <Dropdown.Item onClick={logout}>Sign Out</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </Menu.Menu>
