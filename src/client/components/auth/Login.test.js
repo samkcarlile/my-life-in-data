@@ -1,10 +1,8 @@
 import React from 'react';
-import { shallow, mount, render } from 'enzyme';
-import { configure } from 'enzyme';
+import { shallow, configure } from 'enzyme';
 import { Form } from 'semantic-ui-react';
 import Login from './Login.jsx';
 import Adapter from 'enzyme-adapter-react-16';
-import { JsonWebTokenError } from 'jsonwebtoken';
 
 configure({ adapter: new Adapter() });
 

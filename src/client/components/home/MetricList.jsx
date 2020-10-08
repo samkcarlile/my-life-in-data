@@ -12,18 +12,31 @@ export default function MetricList() {
   }));
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalMetric, setModalMetric] = useState();
 
   useEffect(() => {
     getAllMetrics();
   }, [getAllMetrics]);
 
   const openDataModal = (metric) => {
+    setModalMetric(metric);
     setModalIsOpen(true);
+  };
+
+  const recordModalValue = (value) => {
+    setModalIsOpen(false);
+    if (value !== undefined) {
+      console.log('recording value: ', value);
+    }
   };
 
   return (
     <>
-      <DataPopUp isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} />
+      <DataPopUp
+        metric={modalMetric}
+        isOpen={modalIsOpen}
+        onSubmit={recordModalValue}
+      />
       <Grid container centered doubling columns={3}>
         {metrics.map((metric) => (
           <Grid.Column key={metric._id}>
