@@ -1,20 +1,5 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const path = require('path');
-
-require('dotenv').config();
-
-// Connect to MongoDB
-mongoose.connect(process.env.MONGO_URL, {
-  auth: {
-    user: 'fire',
-    password: 'fYzgID9ajNNj3K3j',
-  },
-  useNewUrlParser: true,
-});
-mongoose.connection.once('open', () => {
-  console.log('Connected to Database');
-});
 
 const app = express();
 
@@ -22,21 +7,27 @@ const app = express();
 app.use('/api', express.json());
 
 // routes for api
-app.use('/api', require('./routes/api'));
+// TODO: connect the routes!
+// router.use('/metrics', authController.authenticate, require('./datasets'));
+// router.use(require('./auth'));
 
-// serve the index.html statically
-app.get('/', (req, res) =>
-  res.sendFile(path.join(__dirname, '../template.html'))
+// serve the index.html/bundle.js statically
+app.get('/bundle.js', (req, res) =>
+  res.sendFile(path.resolve(__dirname, '../../dist/bundle.js'))
+);
+app.get('/*', (req, res) =>
+  res.sendFile(path.resolve(__dirname, '../../dist/index.html'))
 );
 
 app.use((err, req, res, next) => {
-  next; // unused
+  next; // unused 👅
   const defaultError = {
     log: '⚠️ Express error handler caught unknown middleware error.',
     status: 500,
     message: { err: 'An error occurred' },
   };
   const errorObj = Object.assign(defaultError, err);
+
   console.log(errorObj.log);
   res.status(errorObj.status).json(errorObj.message);
 });

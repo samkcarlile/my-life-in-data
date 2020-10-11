@@ -1,13 +1,12 @@
 const mongoose = require('mongoose');
 
 const { Schema, ObjectId } = mongoose;
-
 const RequiredString = { type: String, required: true };
 
-const dataSetSchema = new Schema({
+const metricSchema = new Schema({
   owner: { type: ObjectId, required: true },
   name: RequiredString,
-  graphColor: {
+  color: {
     ...RequiredString,
     enum: require('../constants/colors'),
   },
@@ -16,16 +15,14 @@ const dataSetSchema = new Schema({
     ...RequiredString,
     enum: ['number', 'boolean'],
   },
-  aggregateFunc: {
+  aggregate: {
     ...RequiredString,
     enum: ['sum', 'count', 'average'],
   },
-  // NOTE: ⚠️ might want to include 10-20 most recent data points here
-  //       for convenience...
 });
 
-dataSetSchema.index({ owner: 1 });
+metricSchema.index({ owner: 1 });
 
-const DataSet = mongoose.model('DataSet', dataSetSchema);
+const Metric = mongoose.model('Metric', metricSchema);
 
-module.exports = DataSet;
+module.exports = Metric;
