@@ -2,10 +2,8 @@ const { combineMiddleware } = require('../utils');
 
 const controller = require('./controller');
 const validator = require('./validator');
-const { signUp, login, issueToken, authenticate } = combineMiddleware(
-  validator,
-  controller
-);
+const { authenticate } = require('./middleware');
+const { signUp, login, issueToken } = combineMiddleware(validator, controller);
 
 const router = require('express').Router();
 router.post('/signup', signUp, issueToken);

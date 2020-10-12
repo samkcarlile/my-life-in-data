@@ -1,26 +1,12 @@
 const express = require('express');
-const path = require('path');
 
 const app = express();
 
-// middleware for json body parsing
-app.use('/api', express.json());
+// Connect routes
+require('./routes')(app);
 
-// routes for api
-// TODO: connect the routes!
-// router.use('/metrics', authController.authenticate, require('./datasets'));
-// router.use(require('./auth'));
-
-// serve the index.html/bundle.js statically
-app.get('/bundle.js', (req, res) =>
-  res.sendFile(path.resolve(__dirname, '../../dist/bundle.js'))
-);
-app.get('/*', (req, res) =>
-  res.sendFile(path.resolve(__dirname, '../../dist/index.html'))
-);
-
-app.use((err, req, res, next) => {
-  next; // unused 👅
+// Global error handling
+app.use((err, req, res) => {
   const defaultError = {
     log: '⚠️ Express error handler caught unknown middleware error.',
     status: 500,
@@ -32,6 +18,6 @@ app.use((err, req, res, next) => {
   res.status(errorObj.status).json(errorObj.message);
 });
 
-app.listen(3000, () => {
+app.listen(process.env.PORT || 3000, () => {
   console.log('⚡️ prepare your body');
 });
