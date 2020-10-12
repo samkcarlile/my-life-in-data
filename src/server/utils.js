@@ -30,7 +30,7 @@ const validateProperties = (obj, requiredKeys) => {
 };
 
 const serverError = (tag) => (fnName, err, status) => ({
-  log: `⚠️ [ERROR] ${tag}.${fnName} - ${err}`,
+  log: `⚠️ [ERROR] ${tag}.${fnName} - ${err.message}`,
   message: { error: `Apologies, an error has occurred.` },
   status: status || 500,
 });
@@ -49,7 +49,7 @@ const combineMiddleware = (...controllers) => {
     )
   );
   Object.entries(combined).forEach(
-    (name, middlewares) => (combined[name] = middlewares.flat())
+    ([name, middlewares]) => (combined[name] = middlewares.flat())
   );
 
   return combined;

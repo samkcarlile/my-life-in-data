@@ -10,8 +10,13 @@ const metricExists = param('metric')
     );
   });
 
+const isValidPointForm = [
+  body('value').exists().isNumeric().toFloat(),
+  metricExists,
+];
+
 module.exports = {
-  create: [body('value').exists().isNumeric().toFloat(), metricExists],
-  update: this.create,
+  create: isValidPointForm,
+  update: isValidPointForm,
   getAll: metricExists,
 };

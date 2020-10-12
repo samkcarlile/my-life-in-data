@@ -16,3 +16,5 @@ router
   .put(middleware.update)
   .get(middleware.getOne)
   .delete(middleware.deleteOne);
+
+module.exports = router;

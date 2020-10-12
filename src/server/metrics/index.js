@@ -5,8 +5,8 @@ const validator = require('./validator');
 const middleware = combineMiddleware(validator, controller);
 
 const router = require('express').Router();
-router.post('$', middleware.create);
-router.get('$', middleware.getAll);
+router.post('', middleware.create);
+router.get('', middleware.getAll);
 router
   .route('/:metric$')
   .put(middleware.update)

@@ -3,18 +3,28 @@ const path = require('path');
 const { authenticate } = require('./auth/middleware');
 
 module.exports = (app) => {
-  app.route('/api').use(express.json()).use(require('./auth'));
-  app
-    .route('/api/metrics')
-    .use(authenticate)
-    .use(require('./metrics'))
-    .use(require('./points'));
+  const api = express.Router();
+  api.use(express.json());
+  api.use(require('./auth'));
 
-  // serve the index.html/bundle.js statically
+  const metrics = express.Router();
+  metrics.use(authenticate);
+  metrics.use(require('./metrics'));
+  metrics.use(require('./points'));
+
+  api.use('/metrics', metrics);
+  app.use('/api', api);
+
+  // serve static files
   app.get('/bundle.js', (req, res) =>
     res.sendFile(path.resolve(__dirname, '../../dist/bundle.js'))
   );
   app.get('/*', (req, res) =>
     res.sendFile(path.resolve(__dirname, '../../dist/index.html'))
   );
+
+  // 404 Not Found
+  app.use('/', function (req, res) {
+    res.sendStatus(404);
+  });
 };

@@ -1,12 +1,13 @@
 const { body, param } = require('express-validator');
 
-module.exports = {
-  create: body(['name', 'color', 'type', 'aggregate'])
-    .exists()
-    .isString()
-    .trim(),
+const isValidMetricForm = body(['name', 'color', 'type', 'aggregate'])
+  .exists()
+  .isString()
+  .trim();
 
-  update: this.create,
+module.exports = {
+  create: isValidMetricForm,
+  update: isValidMetricForm,
 
   getOne: param('metric').exists(),
   delete: param('metric').exists(),

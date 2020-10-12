@@ -1,6 +1,6 @@
 const Metric = require('./model');
 const { filterProperties, serverError } = require('../utils');
-const { ErrorMetricNotFound } = require('../constants/errors');
+const { ErrorMetricNotFound } = require('./errors');
 
 const newError = serverError('metrics');
 const getMetricForm = (body) =>
