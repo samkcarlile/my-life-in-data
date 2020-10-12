@@ -17,6 +17,10 @@ const options = {
   useNewUrlParser: true,
 };
 
-mongoose.connect(uri, options, () => {
+mongoose.connect(uri, options, (err) => {
+  if (err) {
+    console.log("🚨 Couldn't connect to MongoDB. Exiting!");
+    process.exit(1);
+  }
   console.log('🍃 Connected to MongoDB!');
 });

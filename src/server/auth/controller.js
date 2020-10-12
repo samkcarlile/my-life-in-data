@@ -34,13 +34,11 @@ module.exports = {
         .orFail(new ErrorUserNotFound())
         .exec();
 
-      if (
-        await bcrypt
-          .compare(password, user.password)
-          .catch(() => Promise.reject(new ErrorBadPassword()))
-      ) {
+      if (await bcrypt.compare(password, user.password)) {
         res.locals.user = user.toObject();
         next();
+      } else {
+        throw new ErrorBadPassword();
       }
     } catch (err) {
       next(newError('login', err));

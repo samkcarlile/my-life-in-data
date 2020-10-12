@@ -15,12 +15,11 @@ module.exports = (app) => {
   api.use('/metrics', metrics);
   app.use('/api', api);
 
-  // serve static files
-  app.get('/bundle.js', (req, res) =>
-    res.sendFile(path.resolve(__dirname, '../../dist/bundle.js'))
-  );
-  app.get('/*', (req, res) =>
-    res.sendFile(path.resolve(__dirname, '../../dist/index.html'))
+  // serve static assets
+  app.get(
+    '/*',
+    express.static(path.resolve(__dirname, '../../dist/')),
+    (req, res) => res.sendFile(path.resolve(__dirname, '../../dist/index.html'))
   );
 
   // 404 Not Found

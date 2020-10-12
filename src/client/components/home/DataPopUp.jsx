@@ -14,7 +14,7 @@ export default function DataPopUp({ metric = {}, isOpen, onSubmit }) {
               <Button
                 onClick={() => onSubmit(value)}
                 icon
-                color={metric.graphColor}
+                color={metric.color}
                 labelPosition="right"
               >
                 Record
